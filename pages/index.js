@@ -30,7 +30,7 @@ export default function Home() {
       const signer = await getProviderOrSigner(true);
       // Create a new instance of the Contract with a Signer, which allows
       // update methods
-      const whitelistContract = new Contract(
+      const whitelistContract = await new Contract(
         NFT_CONTRACT_ADDRESS,
         abi,
         signer
@@ -139,8 +139,8 @@ export default function Home() {
 
   const getOwner = async () => {
     try {
-      const provider = await getProviderOrSigner();
-      const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, provider);
+      const signer = await getProviderOrSigner(true);
+      const nftContract = new Contract(NFT_CONTRACT_ADDRESS, abi, signer);
 
       const _owner = await nftContract.owner();
 
@@ -148,6 +148,7 @@ export default function Home() {
       if (address.toLowerCase() === _owner.toLowerCase()) {
         setIsOwner(true);
       }
+      console.log(isOwner)
     } catch (err) {
       console.error(err.message);
     }
